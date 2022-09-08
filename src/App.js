@@ -1,42 +1,23 @@
-import React,{useState} from 'react';
-import Create from './Create';
-import Header from './Header';
-import Note from './Note';
+import React from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Home from './Component/Home';
+import Add from './Component/Add';
+import Edit from './Component/Edit';
 
 const App = () => {
-
-  const [addItem, setAddItem] = useState([]);
-
-    const addNote = (note) => {
-        setAddItem((prevData) =>{
-            return [...prevData, note];
-        })
-    };
-
-    const onDelete = (id) => {
-        setAddItem((olddata) => 
-            olddata.filter((currdata,indx) =>{
-                return indx !== id;
-            })
-        );
-    };
-
   return (
     <>
-      <Header />
-      <Create passNote={addNote}/>
-      {addItem.map((val, index) =>{
-        return (
-         <Note 
-            key = {index}
-            id={index}
-            title={val.title}
-            content={val.content}
-            deleteItem= {onDelete}
-        />
-        );
-    })}    </>
+      <div className="app">
+        <BrowserRouter>
+          <Routes>
+            <Route path='/'  element= {<Home />}/>
+            <Route path='/create' element= {<Add />} />
+            <Route path='/edit' element={<Edit />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </>
   )
 }
 
-export default App;
+export default App
